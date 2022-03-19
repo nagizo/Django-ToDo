@@ -1,0 +1,56 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% if user.is_authenticated %} 
+{% if object_list %}
+<h1>hello django</h1>
+<!--検索機能-->
+<form action=""　method="get">
+    <input class="form_pd" name="query" value="{{ request.GEt.query }}" type="text" placeholder="Seach">
+    <button class="btn-primary btn-margin" type="submit">Seach</button>
+</form>
+
+<div class="shadow-sm p-3 mb-5 bg-white rounded">
+    <table class="table1 table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">やること</th>
+                <th scope="col">作成日</th>
+                <th scope="col">予定日/締切日</th>
+                <th scope="col">開始時間</th>
+                <th scope="col">終了時間</th>
+                <th scope="col">操作</th>
+            </tr>
+        </thead>
+    </table>
+    <tbody>
+        {% for todo in object_list %}
+        <tr>
+            <td>{{ todo.title }}</td>
+            <td>{{ todo.created_datetime }}</td>
+            {% if todo.date is None %}
+            <td>指定なし</td>
+            {% else %}
+            <td>{{ todo.date}}</td>
+            {% endif %}
+            <td>{{ todo.start_time }}</td>
+            <td>{{ todo.end_time }}</td>
+            <td>
+                <a class="btn btn-outline-secondary btn-sm"href="{% url 'app:detail' todo.id%}">詳細</a>
+                <a class="btn btn-outline-secondary btn-sm"href="{% url 'app:edit_memo' todo.id %}">編集</a>
+                <a class="btn btn-outline-secondary btn-sm"href="{% url 'app:flag_memo' todo.id %}">ゴミ箱</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    {% else %}
+    <div style="text-align: center;">
+        <div class="container">
+            {% load static %}
+            <img src='{% static "app/img/IMG_6979.PNG" %}'height="800">
+        </div> 
+    </div>
+
+{% endif %}
+
+{% endif %}
+{% endblock %}

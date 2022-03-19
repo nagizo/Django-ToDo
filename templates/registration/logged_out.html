@@ -1,0 +1,8 @@
+{% extends '../layout.html' %}
+{% block content %}
+<h1>Logout</h1>
+<p style="text-align: center;" class="mt-5">Thanks for spending some quality time with the Web site today.</p>
+<p style="text-align: center;" class="mt-5"><a href='{% url "login" %}'>Login again -- ToDoアカウントでログイン--</a></p>
+<p style="text-align: center;"><a href="{% url 'social:begin' 'line' %}">Login again　-- LINEアカウントでログイン--</a></p>
+<p style="text-align: center;"><a href="{% url 'app:index' %}">Topページへ</a></p>
+{% endblock %}

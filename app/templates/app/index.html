@@ -1,0 +1,83 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if object_list %}
+<!-- 新規リストの作成 -->
+<a class='btn btn-link' href="{% url 'app:new_memo' %}">新規タスク作成</a>
+<!-- 検索機能 -->
+<div class="container-fluid">
+    <form action="" method="get" class="d-flex">
+      <input class="form-control me-2 mb-2" name="query" value="{{ request.GET.query }}" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success mb-2" type="submit">Search</button>
+    </form>
+  </div>
+
+<div class="shadow-lg p-4 mb-5 mt-2 bg-white ">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">やること</th>
+                <th scope="col">作成日</th>
+                <th scope="col">開始日</th>
+                <th scope="col">開始時間</th>
+                <th scope="col">期限日</th>
+                <th scope="col">終了時間</th>
+                <th scope="col">操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for todo in object_list %}
+            <tr>
+                <td>{{ todo.title }}</td>
+                <td>{{ todo.created_datetime }}</td>
+                {% if todo.date is None %}
+                <td>指定なし</td>
+                {% else %}
+                <td>{{ todo.date}}</td>
+
+                {% if todo.end_date is None %}
+                <td>指定なし</td>
+                {% else %}
+                <td>{{ todo.end_date}}</td>
+                {% endif %}
+                {% endif %}
+                <td>{{ todo.start_time }}</td>
+                <td>{{ todo.end_time }}</td>
+
+                <td>
+                    <a class="btn btn-outline-secondary btn-sm"href="{% url 'app:detail' todo.id%}">詳細</a>
+                    <a class="btn btn-outline-secondary btn-sm"href="{% url 'app:edit_memo' todo.id %}">編集</a>
+                    <a class="btn btn-outline-secondary btn-sm"href="{% url 'app:delete_memo' todo.id %}">削除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+<a class='btn btn-link text-center' href="{% url 'app:new_memo' %}">新規タスク作成</a>
+
+<div style="text-align: center;">
+    {% load static %}
+    <img src='{% static "app/img/IMG_6979.PNG" %}' height="800">
+    
+</div>
+</div>
+{% endif %}
+
+
+{% endif %}
+{% if not user.is_authenticated %}
+<div style="text-align: center;">
+    {% load static %}
+    <img class="mt-5"src='{% static "app/img/IMG_6980.PNG" %}' height="500">
+    <p>ユーザー登録を終えてない方はこちらから</p>
+    <p><a href='{% url "accounts:user_create" %}' class='btn btn-outline-secondary'> Sign up </a></p>
+    <p>ログインはこちらから</p>
+    <p><a href='{% url "login" %}' class='btn btn-outline-secondary'>Login</a>　<a href="{% url 'social:begin' 'line' %}" class='btn btn-outline-success'>LINE</a></p>
+    
+</div>
+{% endif %}
+{% endblock %}
+
+

@@ -1,0 +1,43 @@
+{% extends "app/base.html" %}
+<div>
+    <a href="{% url 'app:detail' memo.id %}">戻る</a>
+</div>
+{% block content %}
+<form action="" method="POST">{% csrf_token %}
+  <table class="table">
+      {{ form.as_table }}
+  </table>
+  <input class="btn btn-outline-secondary" type="submit" value="送信">
+  <a class="btn btn-outline-secondary" href="{% url 'app:index' %}" role="button">戻る</a>
+</form>
+{% endblock content %}
+
+{% block extrajs %}
+<script>
+  $(function(){
+      $("#id_date").datepicker();
+      $("#id_end_date").datepicker();
+      
+  });
+</script>
+
+<script>
+  $(function () {
+      // timedropper
+      $("#id_start_time").timeDropper({
+          format: "H:mm",
+          setCurrentTime: false,
+      });
+      $("#id_end_time").timeDropper({
+          format: "H:mm",
+          setCurrentTime: false,
+      });
+  });
+</script>
+
+<script>
+  $(function () {
+      $('form').attr('autocomplete', 'off');
+  })
+</script> 
+{% endblock %}

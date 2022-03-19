@@ -1,0 +1,48 @@
+{% extends "app/base.html" %}
+{% block content %}
+<div>
+    <a href="{% url 'app:index' %}">Topページへ</a>
+</div>
+
+
+<form class="mt-5" action="{% url 'app:new_memo' %}" method="POST">
+    {% csrf_token %}
+    <table class="table">
+        {{ form.as_table }}
+    </table>
+    <button type="submit button" class="btn btn-outline-secondary">保存</button>
+</form>
+
+{% endblock %}
+
+{% block extrajs %}
+
+<script>
+    $(function(){
+        $("#id_date").datepicker();
+        $("#id_end_date").datepicker();
+        
+    });
+</script>
+
+<script>
+    $(function () {
+        // timedropper
+        $("#id_start_time").timeDropper({
+            format: "H:mm",
+            setCurrentTime: false,
+        });
+        $("#id_end_time").timeDropper({
+            format: "H:mm",
+            setCurrentTime: false,
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('form').attr('autocomplete', 'off');
+    })
+</script> 
+
+{% endblock %}

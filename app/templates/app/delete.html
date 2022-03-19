@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<h1>{{ todo.title }}</h1>
+
+<div class="card">
+    <div class="card-body">
+        {{ todo.text | linebreaks | urlize }}
+    </div>
+</div>
+
+<form action=""  method="post">
+    {% csrf_token %}
+    <button type="submit" class="confirm btn btn-outline-danger btn-block">削除</button>
+    <a class="btn btn-outline-primary" href='JavaScript:history.back()'>戻る</a>
+</form>
+{% endblock %}
+
+
+{% block extrajs %}
+<script>
+$(function(){
+  $(".confirm").on("click", function(){
+      if (!confirm("a")) {
+          return false
+      } else {
+          location.href = 'index.html'
+      }
+  });
+});
+</script>
+{% endblock %}
+  

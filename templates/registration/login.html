@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<div class="form-wrapper">
+    <h1>Login</h1>
+    <form>
+      <div class="form-item">
+        <label for="email"></label>
+        <input required="required" placeholder="User Name"></input>
+      </div>
+      <div class="form-item">
+        <label for="password"></label>
+        <input type="password" name="password" required="required" placeholder="Password"></input>
+      </div>
+      <div class="button-panel">
+        <input action="{% url 'accounts:user_create_done' %}" type="submit" class="button" title="Log in" value="Log In"></input>
+      </div>
+    </form>
+    <div class="form-footer">
+      <p><a href="#">Create an account</a></p>
+      <p><a href="#">Forgot password?</a></p>
+      <p><a href="{% url 'app:index' %}">Topページへ</a></p>
+    </div>
+  </div>
+{% endblock %}
